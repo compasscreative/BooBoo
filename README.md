@@ -12,7 +12,7 @@ BooBoo is a single PHP class that helps manage uncaught exceptions and errors, i
 
 use Reinink\BooBoo\BooBoo;
 
-BooBoo::setup(function($e)
+BooBoo::setup(function($exception)
 {
 	// Set our response code
 	http_response_code(500);
@@ -37,14 +37,14 @@ $logger = new Logger('errors');
 $logger->pushHandler(new StreamHandler('logs/errors.log'));
 
 // Setup error handler
-BooBoo::setup(function($e)
+BooBoo::setup(function($exception)
 {
 	// Set our response code
 	http_response_code(500);
 
 	// Display error view
 	$view = new View('error.php');
-	$view->exception = $e;
+	$view->exception = $exception;
 	$view->render();
 
 }, $logger);
